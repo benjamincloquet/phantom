@@ -14,7 +14,7 @@ export default function Dashboard({
     <section className="bg-phantom-bg-primary min-h-screen pb-13 pt-6">
       <Container>
         <header className="mb-2">
-          <a href="/">Back to Dashboard</a>
+          <a href="/">&#8592; Back to Dashboard</a>
         </header>
         <PhantomDetail id={id} />
       </Container>

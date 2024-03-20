@@ -23,7 +23,7 @@ export default function Phantom({
 
   return (
     <article
-      className={`${className} bg-phantom-bg-secondary relative max-w-xl rounded-lg p-3`}
+      className={`${className} bg-phantom-bg-secondary relative max-w-2xl rounded-lg p-3 shadow-sm`}
     >
       <a
         href={`/phantom/${id}`}
