@@ -16,16 +16,24 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    spacing: createSpacingConfig(20),
+    spacing: {
+      "0.5": "4px",
+      ...createSpacingConfig(64),
+    },
     extend: {
       colors: {
-        primary: "#f5f1ef",
+        "phantom-bg-primary": "#f5f1ef",
+        "phantom-bg-secondary": "#ffffff",
+        "phantom-text-primary": "#000000",
+        "phantom-text-secondary": "#73706e",
+        "phantom-accent": "#5273e8",
       },
       fontFamily: {
         sans: "var(--font-qanelas)",
       },
       fontSize: {
-        xl: ["32px", "40px"],
+        "2xl": ["32px", "40px"],
+        xl: ["20px", "24px"],
       },
     },
   },
