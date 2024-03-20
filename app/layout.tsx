@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${qanelas.className} overflow-hidden`}>
+      <body className={`${qanelas.className} overflow-x-hidden`}>
         <PhantomsProvider>{children}</PhantomsProvider>
       </body>
     </html>
