@@ -10,6 +10,9 @@ import {
 import { IPhantoms } from "@/phantoms";
 import { getPhantoms } from "@/app/api/phantoms";
 
+const LOCAL_STORAGE_KEY = "phantoms";
+const MAX_PHANTOMS = 5;
+
 type Action =
   | {
       type: "set";
@@ -29,9 +32,8 @@ export const PhantomsContext = createContext({
   isLoading: false,
   hasReachedPhantomsLimit: false,
   reloadPhantoms: () => {},
+  MAX_PHANTOMS,
 });
-
-const LOCAL_STORAGE_KEY = "phantoms";
 
 const setCachedData = (value: IPhantoms) => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
@@ -92,7 +94,13 @@ export default function PhantomsProvider({
 
   return (
     <PhantomsContext.Provider
-      value={{ phantoms, isLoading, reloadPhantoms, hasReachedPhantomsLimit }}
+      value={{
+        phantoms,
+        isLoading,
+        reloadPhantoms,
+        hasReachedPhantomsLimit,
+        MAX_PHANTOMS,
+      }}
     >
       {children}
     </PhantomsContext.Provider>

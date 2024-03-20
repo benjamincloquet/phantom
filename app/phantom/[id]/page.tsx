@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Container from "@/app/components/Container";
-import Phantom from "@/app/components/Phantom";
+import Container from "@/app/components/common/Container";
+import Phantom from "@/app/components/Phantom/Phantom";
 
 export const metadata: Metadata = {
   title: "Dashboard | PhantomBuster",
