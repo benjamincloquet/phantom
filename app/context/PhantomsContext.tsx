@@ -6,6 +6,7 @@ import {
   useEffect,
   useReducer,
   createContext,
+  Dispatch,
 } from "react";
 import { IPhantoms } from "@/phantoms";
 import { getPhantoms } from "@/app/api/phantoms";
@@ -14,41 +15,54 @@ const LOCAL_STORAGE_KEY = "phantoms";
 const MAX_PHANTOMS = 5;
 
 type Action =
-  | {
-      type: "set";
-      payload: IPhantoms;
-    }
-  | {
-      type: "delete";
-      payload: string;
-    }
-  | {
-      type: "duplicate";
-      payload: IPhantoms[number];
-    };
+  | { type: "set"; payload: IPhantoms }
+  | { type: "delete"; payload: string }
+  | { type: "duplicate"; payload: IPhantoms[number] };
 
-export const PhantomsContext = createContext({
+type Context = {
+  phantoms: IPhantoms;
+  isLoading: boolean;
+  hasReachedPhantomsLimit: boolean;
+  reloadPhantoms: () => void;
+  maxPhantoms: number;
+  dispatch: Dispatch<Action>;
+};
+
+const DEFAULT_STATE: Context = {
   phantoms: [] as IPhantoms,
   isLoading: false,
   hasReachedPhantomsLimit: false,
+  maxPhantoms: MAX_PHANTOMS,
   reloadPhantoms: () => {},
-  MAX_PHANTOMS,
-});
+  dispatch: () => {},
+};
 
-const setCachedData = (value: IPhantoms) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
+export const PhantomsContext = createContext(DEFAULT_STATE);
+
+const setCachedData = (value: IPhantoms | null) => {
+  if (value) {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
+  } else {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  }
 };
 
 const reducer = (state: IPhantoms, action: Action) => {
+  let newState = [] as IPhantoms;
   switch (action.type) {
     case "set":
-      setCachedData(action.payload);
-      return [...action.payload];
+      newState = [...action.payload];
+      break;
     case "delete":
-      return state.filter((phantom) => phantom.id === action.payload);
+      newState = state.filter((phantom) => phantom.id !== action.payload);
+      break;
     case "duplicate":
-      return [...state, action.payload];
+      const a = action.payload;
+      newState = [...state, action.payload];
+      break;
   }
+  setCachedData(newState);
+  return newState;
 };
 
 export default function PhantomsProvider({
@@ -86,7 +100,7 @@ export default function PhantomsProvider({
   }, [loadPhantoms]);
 
   const reloadPhantoms = () => {
-    dispatch({ type: "set", payload: [] });
+    setCachedData(null);
     loadPhantoms();
   };
 
@@ -94,13 +108,16 @@ export default function PhantomsProvider({
 
   return (
     <PhantomsContext.Provider
-      value={{
-        phantoms,
-        isLoading,
-        reloadPhantoms,
-        hasReachedPhantomsLimit,
-        MAX_PHANTOMS,
-      }}
+      value={
+        {
+          ...DEFAULT_STATE,
+          phantoms,
+          isLoading,
+          hasReachedPhantomsLimit,
+          reloadPhantoms,
+          dispatch,
+        } as Context
+      }
     >
       {children}
     </PhantomsContext.Provider>

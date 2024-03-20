@@ -9,16 +9,16 @@ import PhantomList from "@/app/components/Phantom/PhantomList";
 import usePhantoms from "@/app/hooks/usePhantoms";
 
 export default function Dashboard() {
-  const { phantoms, MAX_PHANTOMS, isLoading, reloadPhantoms } = usePhantoms();
+  const { phantoms, maxPhantoms, isLoading, reloadPhantoms } = usePhantoms();
 
   return (
     <header className="flex items-baseline justify-between">
       <hgroup className="flex items-baseline justify-center space-x-2">
         <PageTitle text="Dashboard" />
-        <Counter current={phantoms.length} max={MAX_PHANTOMS} />
+        <Counter current={phantoms.length} max={maxPhantoms} />
       </hgroup>
       <button disabled={isLoading} onClick={reloadPhantoms}>
-        {"Reload cache"}
+        {"Reload"}
       </button>
     </header>
   );

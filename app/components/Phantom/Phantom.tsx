@@ -6,10 +6,19 @@ import { convertSecondsToReadableTime } from "@/app/utils/utils";
 import usePhantoms from "@/app/hooks/usePhantoms";
 
 export default function Phantom({
-  phantom: { id, name, launchType, repeatedLaunchTimes, nextLaunchIn },
+  phantom,
 }: Readonly<{ phantom: IPhantoms[number] }>) {
+  const { id, name, launchType, repeatedLaunchTimes, nextLaunchIn } = phantom;
   const isLaunchAutomatic = launchType === "repeatedly";
-  const { hasReachedPhantomsLimit } = usePhantoms();
+  const { hasReachedPhantomsLimit, dispatch } = usePhantoms();
+
+  const duplicatePhantom = () => {
+    dispatch({ type: "duplicate", payload: phantom });
+  };
+
+  const deletePhantom = () => {
+    dispatch({ type: "delete", payload: phantom.id });
+  };
 
   return (
     <article className="bg-phantom-bg-secondary relative rounded-lg p-3">
@@ -23,10 +32,13 @@ export default function Phantom({
         <h2 className="text-ellipsis text-lg font-bold">{name}</h2>
         <Dropdown title="Manage">
           <Dropdown.Item>Rename...</Dropdown.Item>
-          <Dropdown.Item disabled={hasReachedPhantomsLimit}>
+          <Dropdown.Item
+            disabled={hasReachedPhantomsLimit}
+            onClick={duplicatePhantom}
+          >
             Duplicate
           </Dropdown.Item>
-          <Dropdown.Item>Delete...</Dropdown.Item>
+          <Dropdown.Item onClick={deletePhantom}>Delete...</Dropdown.Item>
         </Dropdown>
       </header>
       <footer className="mt-2 flex items-center">
