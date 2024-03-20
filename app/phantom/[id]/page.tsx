@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Container from "@/app/components/common/Container";
-import Phantom from "@/app/components/Phantom/Phantom";
+import PhantomDetail from "@/app/components/Phantom/PhantomDetail";
 
 export const metadata: Metadata = {
-  title: "Dashboard | PhantomBuster",
+  title: "Phantom Detail | PhantomBuster",
   description: "",
 };
 
@@ -13,8 +13,10 @@ export default function Dashboard({
   return (
     <section className="bg-phantom-bg-primary min-h-screen pb-13 pt-6">
       <Container>
-        <header>Back to Dashboard</header>
-        <div>Phantom</div>
+        <header className="mb-2">
+          <a href="/">Back to Dashboard</a>
+        </header>
+        <PhantomDetail id={id} />
       </Container>
     </section>
   );

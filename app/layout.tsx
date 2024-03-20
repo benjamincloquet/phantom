@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import PhantomsProvider from "@/app/context/PhantomsContext";
 
 const qanelas = localFont({
   src: [
@@ -27,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${qanelas.className} overflow-hidden`}>{children}</body>
+      <body className={`${qanelas.className} overflow-hidden`}>
+        <PhantomsProvider>{children}</PhantomsProvider>
+      </body>
     </html>
   );
 }

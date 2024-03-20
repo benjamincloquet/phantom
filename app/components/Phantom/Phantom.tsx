@@ -7,7 +7,8 @@ import usePhantoms from "@/app/hooks/usePhantoms";
 
 export default function Phantom({
   phantom,
-}: Readonly<{ phantom: IPhantoms[number] }>) {
+  className,
+}: Readonly<{ phantom: IPhantoms[number]; className?: string }>) {
   const { id, name, launchType, repeatedLaunchTimes, nextLaunchIn } = phantom;
   const isLaunchAutomatic = launchType === "repeatedly";
   const { hasReachedPhantomsLimit, dispatch } = usePhantoms();
@@ -21,7 +22,9 @@ export default function Phantom({
   };
 
   return (
-    <article className="bg-phantom-bg-secondary relative rounded-lg p-3">
+    <article
+      className={`${className} bg-phantom-bg-secondary relative max-w-xl rounded-lg p-3`}
+    >
       <a
         href={`/phantom/${id}`}
         className="absolute inset-0 h-full w-full rounded-xl"
