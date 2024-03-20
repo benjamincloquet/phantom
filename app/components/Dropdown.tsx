@@ -7,9 +7,9 @@ function DropdownItem({
   onClick,
 }: Readonly<{ children: React.ReactNode; onClick?: () => void }>) {
   return (
-    <li className="hover:bg-phantom-bg-primary focus:bg-phantom-accent active:bg-phantom-bg-primary relative block text-sm text-gray-700 focus:outline-none focus:ring">
+    <li className="hover:bg-phantom-bg-primary focus:bg-phantom-accent active:bg-phantom-bg-primary block text-sm text-gray-700 focus:outline-none focus:ring">
       <button
-        className="px-2 py-2 text-left"
+        className="w-full px-2 py-2 text-left"
         role="menuitem"
         onClick={() => onClick && onClick()}
       >

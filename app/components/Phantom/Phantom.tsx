@@ -5,12 +5,18 @@ import Dropdown from "@/app/components/Dropdown";
 import { convertSecondsToReadableTime } from "@/app/utils/utils";
 
 export default function Phantom({
-  phantom: { name, launchType, repeatedLaunchTimes, nextLaunchIn },
+  phantom: { id, name, launchType, repeatedLaunchTimes, nextLaunchIn },
 }: Readonly<{ phantom: IPhantoms[number] }>) {
   const isLaunchAutomatic = launchType === "repeatedly";
 
   return (
-    <article className="bg-phantom-bg-secondary rounded-lg p-3">
+    <article className="bg-phantom-bg-secondary relative rounded-lg p-3">
+      <a
+        href={`/phantom/${id}`}
+        className="absolute inset-0 h-full w-full rounded-xl"
+      >
+        <span className="sr-only">Détails</span>
+      </a>
       <header className="flex items-baseline justify-between">
         <h2 className="text-ellipsis text-lg font-bold">{name}</h2>
         <Dropdown title="Manage">
