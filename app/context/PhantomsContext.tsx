@@ -71,29 +71,28 @@ export default function PhantomsProvider({
   children: React.ReactNode;
 }) {
   const [phantoms, dispatch] = useReducer(reducer, [] as IPhantoms);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchPhantomsFromAPI = useCallback(async () => {
+    const phantoms = await getPhantoms();
+    dispatch({ type: "set", payload: phantoms });
+  }, []);
+
+  const loadPhantoms = useCallback(async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      const phantoms = await getPhantoms();
-      dispatch({ type: "set", payload: phantoms });
+      const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (cachedData) {
+        dispatch({ type: "set", payload: JSON.parse(cachedData) as IPhantoms });
+      } else {
+        await fetchPhantomsFromAPI();
+      }
     } catch (e: unknown) {
       // error handling
     } finally {
       setIsLoading(false);
     }
-  }, []);
-
-  const loadPhantoms = useCallback(() => {
-    if (isLoading) return;
-    const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (cachedData) {
-      dispatch({ type: "set", payload: JSON.parse(cachedData) as IPhantoms });
-    } else {
-      fetchPhantomsFromAPI();
-    }
-  }, [fetchPhantomsFromAPI, isLoading]);
+  }, [fetchPhantomsFromAPI]);
 
   useEffect(() => {
     loadPhantoms();
@@ -104,7 +103,7 @@ export default function PhantomsProvider({
     loadPhantoms();
   };
 
-  const hasReachedPhantomsLimit = phantoms.length === 5;
+  const hasReachedPhantomsLimit = phantoms.length === MAX_PHANTOMS;
 
   return (
     <PhantomsContext.Provider

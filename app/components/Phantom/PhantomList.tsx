@@ -5,6 +5,7 @@ import usePhantoms from "@/app/hooks/usePhantoms";
 import Phantom from "@/app/components/Phantom/Phantom";
 import PhantomFilter from "@/app/components/Phantom/PhantomFilter";
 import PhantomLoader from "@/app/components/Phantom/PhantomLoader";
+import PhantomPlaceholder from "@/app/components/Phantom/PhantomPlaceholder";
 
 const launchTypes = [
   { label: "Automatic", value: "repeatedly" },
@@ -23,6 +24,29 @@ export default function PhantomList({}: Readonly<{}>) {
   const { phantoms, isLoading, maxPhantoms } = usePhantoms();
   const [launchType, setLaunchType] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);
+
+  const renderLoader = () =>
+    [...Array(maxPhantoms)].map((_, index) => (
+      <li key={index}>
+        <PhantomLoader />
+      </li>
+    ));
+
+  const renderEmpty = () => <PhantomPlaceholder />;
+
+  const renderList = () => {
+    return phantoms
+      .filter((phantom) => !launchType || phantom.launchType === launchType)
+      .filter(
+        (phantom) =>
+          !category || phantom.manifest.tags.categories.includes(category),
+      )
+      .map((phantom) => (
+        <li key={phantom.id}>
+          <Phantom phantom={phantom} />
+        </li>
+      ));
+  };
 
   return (
     <main className="grid grid-cols-4 gap-2">
@@ -44,25 +68,10 @@ export default function PhantomList({}: Readonly<{}>) {
       <section className="col-span-3">
         <ul className="flex flex-col gap-2">
           {isLoading
-            ? [...Array(maxPhantoms)].map((_, index) => (
-                <li key={index}>
-                  <PhantomLoader />
-                </li>
-              ))
-            : phantoms
-                .filter(
-                  (phantom) => !launchType || phantom.launchType === launchType,
-                )
-                .filter(
-                  (phantom) =>
-                    !category ||
-                    phantom.manifest.tags.categories.includes(category),
-                )
-                .map((phantom) => (
-                  <li key={phantom.id}>
-                    <Phantom phantom={phantom} />
-                  </li>
-                ))}
+            ? renderLoader()
+            : phantoms.length === 0
+              ? renderEmpty()
+              : renderList()}
         </ul>
       </section>
     </main>
