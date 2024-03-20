@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import usePhantoms from "@/app/hooks/usePhantoms";
 import Phantom from "@/app/components/Phantom/Phantom";
 import PhantomFilter from "@/app/components/Phantom/PhantomFilter";
 import PhantomLoader from "@/app/components/Phantom/PhantomLoader";
 import PhantomPlaceholder from "@/app/components/Phantom/PhantomPlaceholder";
+import useSearchParamFilter from "@/app/hooks/useSearchParamFilter";
 
 const launchTypes = [
   { label: "Automatic", value: "repeatedly" },
@@ -20,10 +20,10 @@ const categories = [
   { label: "Sales Navigator", value: "salesNavigator" },
 ];
 
-export default function PhantomList({}: Readonly<{}>) {
+export default function PhantomList() {
   const { phantoms, isLoading, maxPhantoms } = usePhantoms();
-  const [launchType, setLaunchType] = useState<string | null>(null);
-  const [category, setCategory] = useState<string | null>(null);
+  const [launchType, setLaunchType] = useSearchParamFilter("launchType");
+  const [category, setCategory] = useSearchParamFilter("category");
 
   const renderLoader = () =>
     [...Array(maxPhantoms)].map((_, index) => (
