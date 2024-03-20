@@ -12,7 +12,7 @@ export default function Dashboard() {
   const { phantoms, maxPhantoms, isLoading, reloadPhantoms } = usePhantoms();
 
   return (
-    <header className="flex items-baseline justify-between">
+    <header className="mb-4 flex items-baseline justify-between">
       <hgroup className="flex items-baseline justify-center space-x-2">
         <PageTitle text="Dashboard" />
         <Counter current={phantoms.length} max={maxPhantoms} />

@@ -13,7 +13,7 @@ export default function Dashboard() {
     <section className="min-h-screen bg-phantom-bg-primary pb-13 pt-6">
       <Container>
         <Header />
-        <PhantomList />`
+        <PhantomList />
       </Container>
     </section>
   );
