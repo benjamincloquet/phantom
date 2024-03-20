@@ -19,7 +19,7 @@ export default function Dashboard({
       <Container>
         <header>
           <hgroup className="flex items-baseline justify-center space-x-2">
-            <PageTitle text={"Dashboard"} />
+            <PageTitle text="Dashboard" />
             <Counter current={1} total={5} />
           </hgroup>
         </header>
