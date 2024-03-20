@@ -3,5 +3,5 @@ export default function PageTitle({
 }: Readonly<{
   text: string;
 }>) {
-  return <h1 className="text-xl font-bold">{text}</h1>;
+  return <h1 className="text-2xl font-bold">{text}</h1>;
 }
