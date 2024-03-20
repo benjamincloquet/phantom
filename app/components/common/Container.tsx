@@ -1,4 +1,4 @@
-export default function RootLayout({
+export default function Container({
   children,
 }: Readonly<{
   children: React.ReactNode;
