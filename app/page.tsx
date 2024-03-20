@@ -8,14 +8,12 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default function Dashboard({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function Dashboard() {
   return (
-    <section className="bg-phantom-bg-primary min-h-screen pb-13 pt-6">
+    <section className="min-h-screen bg-phantom-bg-primary pb-13 pt-6">
       <Container>
         <Header />
-        <PhantomList />
+        <PhantomList />`
       </Container>
     </section>
   );
