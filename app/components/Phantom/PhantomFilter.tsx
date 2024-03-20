@@ -23,24 +23,24 @@ export default function PhantomFilter({
         {name}
       </legend>
       {categories.map((category) => (
-        <div key={category.value} className="relative mb-1 max-w-30">
+        <div key={category.value} className="group relative mb-1 max-w-30">
           <input
             type="radio"
             id={category.value}
             name={name}
             value={category.value}
             checked={selectedCategory === category.value}
-            className="peer/input sr-only"
+            className="peer sr-only"
             onChange={() => onCategorySelected(category.value)}
             onClick={() => onCategoryClick(category)}
           />
           <label
             htmlFor={category.value}
-            className="peer/label ml-1 block w-full cursor-pointer select-none text-phantom-text-secondary peer-checked/input:font-bold peer-checked/input:text-phantom-accent"
+            className="ml-1 block w-full cursor-pointer select-none text-phantom-text-secondary peer-checked:font-bold peer-checked:text-phantom-accent"
           >
             {category.label}
           </label>
-          <span className="invisible absolute right-0 top-[2px] text-sm text-phantom-accent peer-checked/input:peer-hover/label:visible">
+          <span className="absolute right-4 top-[2px] cursor-pointer text-sm text-phantom-accent opacity-0 group-hover:peer-checked:opacity-100">
             &#10005;
           </span>
         </div>
