@@ -3,11 +3,13 @@ import Toggle from "@/app/components/Toggle";
 import PhantomCaption from "@/app/components/Phantom/PhantomCaption";
 import Dropdown from "@/app/components/Dropdown";
 import { convertSecondsToReadableTime } from "@/app/utils/utils";
+import usePhantoms from "@/app/hooks/usePhantoms";
 
 export default function Phantom({
   phantom: { id, name, launchType, repeatedLaunchTimes, nextLaunchIn },
 }: Readonly<{ phantom: IPhantoms[number] }>) {
   const isLaunchAutomatic = launchType === "repeatedly";
+  const { hasReachedPhantomsLimit } = usePhantoms();
 
   return (
     <article className="bg-phantom-bg-secondary relative rounded-lg p-3">
@@ -21,7 +23,9 @@ export default function Phantom({
         <h2 className="text-ellipsis text-lg font-bold">{name}</h2>
         <Dropdown title="Manage">
           <Dropdown.Item>Rename...</Dropdown.Item>
-          <Dropdown.Item>Duplicate</Dropdown.Item>
+          <Dropdown.Item disabled={hasReachedPhantomsLimit}>
+            Duplicate
+          </Dropdown.Item>
           <Dropdown.Item>Delete...</Dropdown.Item>
         </Dropdown>
       </header>

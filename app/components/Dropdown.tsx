@@ -4,13 +4,19 @@ import { useState } from "react";
 
 function DropdownItem({
   children,
+  disabled,
   onClick,
-}: Readonly<{ children: React.ReactNode; onClick?: () => void }>) {
+}: Readonly<{
+  children: React.ReactNode;
+  disabled?: boolean;
+  onClick?: () => void;
+}>) {
   return (
     <li className="hover:bg-phantom-bg-primary focus:bg-phantom-accent active:bg-phantom-bg-primary block text-sm text-gray-700 focus:outline-none focus:ring">
       <button
-        className="w-full px-2 py-2 text-left"
+        className="w-full px-2 py-2 text-left disabled:text-gray-400"
         role="menuitem"
+        disabled={disabled}
         onClick={() => onClick && onClick()}
       >
         {children}

@@ -2,14 +2,9 @@
 
 import usePhantoms from "@/app/hooks/usePhantoms";
 import Phantom from "@/app/components/Phantom/Phantom";
-import { useEffect } from "react";
 
 export default function PhantomList({}: Readonly<{}>) {
-  const { phantoms, execute: getPhantoms, isLoading } = usePhantoms();
-
-  useEffect(() => {
-    getPhantoms();
-  }, [getPhantoms]);
+  const { phantoms, isLoading } = usePhantoms();
 
   return (
     <>
