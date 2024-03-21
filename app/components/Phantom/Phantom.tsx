@@ -12,10 +12,12 @@ export default function Phantom({
   phantom,
   className,
   disableLink,
+  onRename,
 }: Readonly<{
   phantom: IPhantoms[number];
   className?: string;
   disableLink?: boolean;
+  onRename?: (name: string) => void;
 }>) {
   const {
     id,
@@ -42,7 +44,7 @@ export default function Phantom({
 
   const renamePhantom = () => {
     dispatch({ type: "rename", payload: { id, name: newName } });
-    if (article.current) article.current.focus();
+    onRename && onRename(newName);
   };
 
   return (

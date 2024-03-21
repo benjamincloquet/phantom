@@ -10,8 +10,9 @@ import {
 } from "react";
 import { IPhantoms } from "@/phantoms";
 import { getPhantoms } from "@/app/api/phantoms";
+import { createHistory, clearHistory } from "@/app/api/history";
 
-const LOCAL_STORAGE_KEY = "phantoms";
+const LOCAL_STORAGE_PHANTOMS_KEY = "phantoms";
 const MAX_PHANTOMS = 5;
 
 type Action =
@@ -42,9 +43,10 @@ export const PhantomsContext = createContext(DEFAULT_STATE);
 
 const setCachedData = (value: IPhantoms | null) => {
   if (value) {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
+    localStorage.setItem(LOCAL_STORAGE_PHANTOMS_KEY, JSON.stringify(value));
   } else {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    localStorage.removeItem(LOCAL_STORAGE_PHANTOMS_KEY);
+    clearHistory();
   }
 };
 
@@ -80,26 +82,27 @@ export default function PhantomsProvider({
   const [phantoms, dispatch] = useReducer(reducer, [] as IPhantoms);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchPhantomsFromAPI = useCallback(async () => {
+  const fetchPhantomsFromAPIAndCreateHistory = useCallback(async () => {
     const phantoms = await getPhantoms();
     dispatch({ type: "set", payload: phantoms });
+    createHistory(phantoms);
   }, []);
 
   const loadPhantoms = useCallback(async () => {
     setIsLoading(true);
     try {
-      const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const cachedData = localStorage.getItem(LOCAL_STORAGE_PHANTOMS_KEY);
       if (cachedData) {
         dispatch({ type: "set", payload: JSON.parse(cachedData) as IPhantoms });
       } else {
-        await fetchPhantomsFromAPI();
+        await fetchPhantomsFromAPIAndCreateHistory();
       }
     } catch (e: unknown) {
       // error handling
     } finally {
       setIsLoading(false);
     }
-  }, [fetchPhantomsFromAPI]);
+  }, [fetchPhantomsFromAPIAndCreateHistory]);
 
   useEffect(() => {
     loadPhantoms();

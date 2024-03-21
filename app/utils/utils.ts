@@ -18,3 +18,20 @@ export function convertSecondsToReadableTime(seconds: number) {
     return computeUnit(days, "day");
   }
 }
+
+export function formatDate(timestamp: number): string {
+  const date = new Date(timestamp);
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Europe/Paris",
+  };
+  const formattedDate = date
+    .toLocaleDateString("en-GB", options)
+    .replace(",", " at");
+  return formattedDate;
+}

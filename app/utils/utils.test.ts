@@ -1,4 +1,4 @@
-import { convertSecondsToReadableTime } from "./utils";
+import { convertSecondsToReadableTime, formatDate } from "./utils";
 
 describe("convertSecondsToReadableTime", () => {
   test("converts seconds to seconds when less than 60 seconds", () => {
@@ -23,5 +23,13 @@ describe("convertSecondsToReadableTime", () => {
     expect(convertSecondsToReadableTime(86400)).toBe("1 day");
     expect(convertSecondsToReadableTime(172800)).toBe("2 days");
     expect(convertSecondsToReadableTime(-1728000)).toBe("-20 days");
+  });
+});
+
+describe("formatDate function", () => {
+  test("format Date to readable string", () => {
+    const timestamp = 1711017654546;
+    const formattedDate = formatDate(timestamp);
+    expect(formattedDate).toEqual("21/03/2024 at 11:40 am");
   });
 });
