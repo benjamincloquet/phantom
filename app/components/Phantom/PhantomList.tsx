@@ -60,21 +60,27 @@ export default function PhantomList() {
   };
 
   return (
-    <main className="grid grid-cols-4 gap-2">
-      <section className="col-span-1">
+    <main className="gap-2 lg:grid lg:grid-cols-4">
+      <section className="lg:col-span-1">
         <p className="mb-2 text-lg font-bold">{"Filters"}</p>
-        <PhantomFilter
-          name="Launch type"
-          category={launchType}
-          categories={launchTypes}
-          onCategorySelected={(launchType) => setLaunchType(launchType)}
-        />
-        <PhantomFilter
-          name="Category"
-          category={category}
-          categories={categories}
-          onCategorySelected={(category) => setCategory(category)}
-        />
+        <div className="grid grid-cols-2 lg:block">
+          <div className="col-span-1">
+            <PhantomFilter
+              name="Launch type"
+              category={launchType}
+              categories={launchTypes}
+              onCategorySelected={(launchType) => setLaunchType(launchType)}
+            />
+          </div>
+          <div className="col-span-1">
+            <PhantomFilter
+              name="Category"
+              category={category}
+              categories={categories}
+              onCategorySelected={(category) => setCategory(category)}
+            />
+          </div>
+        </div>
       </section>
       <section className="col-span-3">
         <ul className="flex flex-col gap-2">

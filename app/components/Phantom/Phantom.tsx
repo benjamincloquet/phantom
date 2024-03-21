@@ -48,7 +48,7 @@ export default function Phantom({
   return (
     <article
       ref={article}
-      className={`${className} relative mx-auto h-19 max-w-2xl rounded-lg bg-phantom-bg-secondary p-3 shadow-sm`}
+      className={`${className} relative mx-auto min-h-20 max-w-2xl rounded-lg bg-phantom-bg-secondary p-3 shadow-sm lg:h-19`}
     >
       <a
         href={`/phantom/${id}`}
@@ -56,45 +56,52 @@ export default function Phantom({
       >
         <span className="sr-only">Détails</span>
       </a>
-      <header className="flex justify-between">
-        <hgroup>
+      <header>
+        <div className="mb-2 lg:hidden">
           <PhantomCategories categories={categories} />
-          <h2 className="mt-2 text-ellipsis text-lg font-bold">{name}</h2>
-        </hgroup>
-        <Dropdown title="Manage">
-          <Dialog
-            render={(openDialog) => (
-              <Dropdown.Item onClick={openDialog}>Rename...</Dropdown.Item>
-            )}
-            onConfirm={renamePhantom}
-          >
-            <p className="mb-3 text-phantom-text-secondary">
-              Rename your Phantom
-            </p>
-            <input
-              type="text"
-              className="w-50 rounded-md border border-gray-300 px-3 py-2"
-              value={newName}
-              onChange={(event) => setNewName(event.target.value)}
-            />
-          </Dialog>
-          <Dropdown.Item
-            disabled={hasReachedPhantomsLimit}
-            onClick={duplicatePhantom}
-          >
-            Duplicate
-          </Dropdown.Item>
-          <Dialog
-            render={(openDialog) => (
-              <Dropdown.Item onClick={openDialog}>
-                <span className="text-orange-600">Delete...</span>
-              </Dropdown.Item>
-            )}
-            onConfirm={deletePhantom}
-          >
-            Are you sure you want to delete this Phantom ?
-          </Dialog>
-        </Dropdown>
+        </div>
+        <div className="flex justify-between">
+          <hgroup className="">
+            <div className="hidden lg:block">
+              <PhantomCategories categories={categories} />
+            </div>
+            <h2 className="text-ellipsis text-lg font-bold lg:mt-2">{name}</h2>
+          </hgroup>
+          <Dropdown title="Manage">
+            <Dialog
+              render={(openDialog) => (
+                <Dropdown.Item onClick={openDialog}>Rename...</Dropdown.Item>
+              )}
+              onConfirm={renamePhantom}
+            >
+              <p className="mb-3 text-phantom-text-secondary">
+                Rename your Phantom
+              </p>
+              <input
+                type="text"
+                className="w-50 max-w-full rounded-md border border-gray-300 px-3 py-2"
+                value={newName}
+                onChange={(event) => setNewName(event.target.value)}
+              />
+            </Dialog>
+            <Dropdown.Item
+              disabled={hasReachedPhantomsLimit}
+              onClick={duplicatePhantom}
+            >
+              Duplicate
+            </Dropdown.Item>
+            <Dialog
+              render={(openDialog) => (
+                <Dropdown.Item onClick={openDialog}>
+                  <span className="text-orange-600">Delete...</span>
+                </Dropdown.Item>
+              )}
+              onConfirm={deletePhantom}
+            >
+              Are you sure you want to delete this Phantom ?
+            </Dialog>
+          </Dropdown>
+        </div>
       </header>
       <footer className="mt-2 flex items-center">
         <Toggle value={isLaunchAutomatic} />

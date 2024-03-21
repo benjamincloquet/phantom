@@ -21,7 +21,7 @@ export default function Dialog({
     <>
       <dialog
         ref={dialog}
-        className="rounded-lg px-6 pb-4 pt-6 backdrop:backdrop-blur-sm"
+        className="rounded-lg px-2 pb-4 pt-6 backdrop:backdrop-blur-sm lg:px-6"
       >
         <form>
           {children}
