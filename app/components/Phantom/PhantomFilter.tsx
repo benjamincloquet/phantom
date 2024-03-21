@@ -25,7 +25,7 @@ export default function PhantomFilter({
       {categories.map((category) => (
         <div
           key={category.value}
-          className="group relative mb-1 max-w-30 focus-within:ring-2  focus-within:ring-phantom-accent"
+          className="group relative mb-1 max-w-30 [&:has(:focus-visible)]:ring-2  [&:has(:focus-visible)]:ring-phantom-accent"
         >
           <input
             type="radio"
