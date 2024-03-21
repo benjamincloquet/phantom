@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import usePhantoms from "@/app/hooks/usePhantoms";
 import Phantom from "@/app/components/Phantom/Phantom";
 import PhantomFilter from "@/app/components/Phantom/PhantomFilter";
@@ -45,18 +46,33 @@ export default function PhantomList() {
     </PhantomPlaceholder>
   );
 
+  const renderNoResult = () => (
+    <PhantomPlaceholder>
+      <div className="flex flex-col gap-y-2">
+        <p className="text-phantom-text-secondary">
+          No results for this search criteria.
+        </p>
+      </div>
+    </PhantomPlaceholder>
+  );
+
+  const filteredPhantoms = useMemo(
+    () =>
+      phantoms
+        .filter((phantom) => !launchType || phantom.launchType === launchType)
+        .filter(
+          (phantom) =>
+            !category || phantom.manifest.tags.categories.includes(category),
+        ),
+    [category, launchType, phantoms],
+  );
+
   const renderList = () => {
-    return phantoms
-      .filter((phantom) => !launchType || phantom.launchType === launchType)
-      .filter(
-        (phantom) =>
-          !category || phantom.manifest.tags.categories.includes(category),
-      )
-      .map((phantom) => (
-        <li key={phantom.id}>
-          <Phantom phantom={phantom} />
-        </li>
-      ));
+    return filteredPhantoms.map((phantom) => (
+      <li key={phantom.id}>
+        <Phantom phantom={phantom} />
+      </li>
+    ));
   };
 
   return (
@@ -88,7 +104,9 @@ export default function PhantomList() {
             ? renderLoader()
             : phantoms.length === 0
               ? renderEmpty()
-              : renderList()}
+              : filteredPhantoms.length === 0
+                ? renderNoResult()
+                : renderList()}
         </ul>
       </section>
     </main>

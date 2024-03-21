@@ -23,7 +23,10 @@ export default function PhantomFilter({
         {name}
       </legend>
       {categories.map((category) => (
-        <div key={category.value} className="group relative mb-1 max-w-30">
+        <div
+          key={category.value}
+          className="group relative mb-1 max-w-30 focus-within:ring-2  focus-within:ring-phantom-accent"
+        >
           <input
             type="radio"
             id={category.value}
