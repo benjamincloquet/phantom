@@ -3,12 +3,14 @@ export function convertSecondsToReadableTime(seconds: number) {
     return `${amount} ${unit}${amount !== 1 ? "s" : ""}`;
   };
 
-  if (seconds < 60) {
+  const secondsAbs = Math.abs(seconds);
+
+  if (secondsAbs < 60) {
     return computeUnit(seconds, "second");
-  } else if (seconds < 3600) {
+  } else if (secondsAbs < 3600) {
     const minutes = Math.floor(seconds / 60);
     return computeUnit(minutes, "minute");
-  } else if (seconds < 86400) {
+  } else if (secondsAbs < 86400) {
     const hours = Math.floor(seconds / 3600);
     return computeUnit(hours, "hour");
   } else {
