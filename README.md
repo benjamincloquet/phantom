@@ -1,8 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Welcome ! This is my entry for the technical test at PhantomBuster. This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). Make sure to have Node.js (LTS) installed before you start.
 
-## Getting Started
+## Scripts
 
-First, run the development server:
+To run the dev server at [http://localhost:3000](http://localhost:3000) :
 
 ```bash
 npm run dev
@@ -14,23 +14,20 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run the test suite with Jest (1 suite, 4 tests)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run test
+# or
+yarn test
+# or
+pnpm test
+# or
+bun test
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+This project features a dashboard with filters to navigate your phantoms. Phantoms can be filtered by launch type and/or category in a persistent way through the url. Each phantom in the list has a display of its basic info (name, categorie(s), launch type and time) as well as a "Manage" dropdown menu with three options : rename, duplicate, delete. A phantom can only be duplicated if the user has leftover slots. Clicking on a phantom brings you to a detail page. Data is loaded through a fake api with an artificial delay, which is cached in the localStorage. Loading states and special cases (eg. empty phantom list) notify the user of the state of the app. The reload button allows you to clear the cache and reload via the api. Each page has keyboard navigation. The project can also be visited on mobile.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Enjoy reviewing this as much as I enjoyed coding it!
