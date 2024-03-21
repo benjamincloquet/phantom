@@ -19,10 +19,13 @@ export default function Dialog({
 
   return (
     <>
-      <dialog ref={dialog} className="rounded-lg p-3 backdrop:backdrop-blur-sm">
+      <dialog
+        ref={dialog}
+        className="rounded-lg px-6 pb-4 pt-6 backdrop:backdrop-blur-sm"
+      >
         <form>
           {children}
-          <div className="mt-2 flex justify-end gap-x-2">
+          <div className="mt-4 flex justify-end gap-x-2">
             <button
               value="cancel"
               formMethod="dialog"
@@ -34,7 +37,7 @@ export default function Dialog({
               value="default"
               formMethod="dialog"
               onClick={onConfirm}
-              className="bg-phantom-accent rounded-md px-2 py-1 font-semibold text-white shadow-sm"
+              className="rounded-md bg-phantom-accent px-2 py-1 font-semibold text-white shadow-sm"
             >
               Confirm
             </button>

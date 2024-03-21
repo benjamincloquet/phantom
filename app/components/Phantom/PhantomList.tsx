@@ -32,7 +32,18 @@ export default function PhantomList() {
       </li>
     ));
 
-  const renderEmpty = () => <PhantomPlaceholder />;
+  const renderEmpty = () => (
+    <PhantomPlaceholder>
+      <div className="flex flex-col gap-y-2">
+        <p className="text-phantom-text-secondary">
+          Boo ! Nothing to see here.
+        </p>
+        <button className="rounded-lg bg-phantom-accent px-2 py-1 text-white">
+          Use a new Phantom
+        </button>
+      </div>
+    </PhantomPlaceholder>
+  );
 
   const renderList = () => {
     return phantoms

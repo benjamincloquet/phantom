@@ -6,11 +6,17 @@ import Dialog from "@/app/components/common/Dialog";
 import PhantomCategories from "@/app/components/Phantom/PhantomCategories";
 import { convertSecondsToReadableTime } from "@/app/utils/utils";
 import usePhantoms from "@/app/hooks/usePhantoms";
+import { useState, useRef } from "react";
 
 export default function Phantom({
   phantom,
   className,
-}: Readonly<{ phantom: IPhantoms[number]; className?: string }>) {
+  disableLink,
+}: Readonly<{
+  phantom: IPhantoms[number];
+  className?: string;
+  disableLink?: boolean;
+}>) {
   const {
     id,
     name,
@@ -23,6 +29,8 @@ export default function Phantom({
   } = phantom;
   const isLaunchAutomatic = launchType === "repeatedly";
   const { hasReachedPhantomsLimit, dispatch } = usePhantoms();
+  const [newName, setNewName] = useState(name);
+  const article = useRef<HTMLElement>(null);
 
   const duplicatePhantom = () => {
     dispatch({ type: "duplicate", payload: phantom });
@@ -32,13 +40,19 @@ export default function Phantom({
     dispatch({ type: "delete", payload: phantom.id });
   };
 
+  const renamePhantom = () => {
+    dispatch({ type: "rename", payload: { id, name: newName } });
+    if (article.current) article.current.focus();
+  };
+
   return (
     <article
+      ref={article}
       className={`${className} relative mx-auto h-19 max-w-2xl rounded-lg bg-phantom-bg-secondary p-3 shadow-sm`}
     >
       <a
         href={`/phantom/${id}`}
-        className="absolute inset-0 h-full w-full rounded-xl"
+        className={`absolute inset-0 h-full w-full rounded-xl ${disableLink ? "invisible" : ""}`}
       >
         <span className="sr-only">Détails</span>
       </a>
@@ -48,7 +62,22 @@ export default function Phantom({
           <h2 className="mt-2 text-ellipsis text-lg font-bold">{name}</h2>
         </hgroup>
         <Dropdown title="Manage">
-          <Dropdown.Item>Rename...</Dropdown.Item>
+          <Dialog
+            render={(openDialog) => (
+              <Dropdown.Item onClick={openDialog}>Rename...</Dropdown.Item>
+            )}
+            onConfirm={renamePhantom}
+          >
+            <p className="mb-3 text-phantom-text-secondary">
+              Rename your Phantom
+            </p>
+            <input
+              type="text"
+              className="w-50 rounded-md border border-gray-300 px-3 py-2"
+              value={newName}
+              onChange={(event) => setNewName(event.target.value)}
+            />
+          </Dialog>
           <Dropdown.Item
             disabled={hasReachedPhantomsLimit}
             onClick={duplicatePhantom}
@@ -57,7 +86,9 @@ export default function Phantom({
           </Dropdown.Item>
           <Dialog
             render={(openDialog) => (
-              <Dropdown.Item onClick={openDialog}>Delete...</Dropdown.Item>
+              <Dropdown.Item onClick={openDialog}>
+                <span className="text-orange-600">Delete...</span>
+              </Dropdown.Item>
             )}
             onConfirm={deletePhantom}
           >

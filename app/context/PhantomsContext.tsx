@@ -17,7 +17,8 @@ const MAX_PHANTOMS = 5;
 type Action =
   | { type: "set"; payload: IPhantoms }
   | { type: "delete"; payload: string }
-  | { type: "duplicate"; payload: IPhantoms[number] };
+  | { type: "duplicate"; payload: IPhantoms[number] }
+  | { type: "rename"; payload: { id: string; name: string } };
 
 type Context = {
   phantoms: IPhantoms;
@@ -57,8 +58,14 @@ const reducer = (state: IPhantoms, action: Action) => {
       newState = state.filter((phantom) => phantom.id !== action.payload);
       break;
     case "duplicate":
-      const a = action.payload;
       newState = [...state, action.payload];
+      break;
+    case "rename":
+      newState = state.map((phantom) =>
+        phantom.id === action.payload.id
+          ? { ...phantom, name: action.payload.name }
+          : phantom,
+      );
       break;
   }
   setCachedData(newState);
